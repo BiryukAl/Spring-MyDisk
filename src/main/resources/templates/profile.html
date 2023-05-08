@@ -1,0 +1,199 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{_cdnlink}">
+    <title>My Disk</title>
+</head>
+<body class="bg-dark">
+<div th:replace="~{_navbar}"></div>
+
+<section class="bg-dark">
+    <div class="container py-5">
+        <div class="row" id="profile">
+            <div class="col">
+                <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a th:href="@{/user#profile}">User</a></li>
+                        <li aria-current="page" class="breadcrumb-item active">Profile</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <img alt="avatar"
+                             class="rounded-circle img-fluid"
+                             src=""
+                             style="width: 150px;"
+                             th:src="@{https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava{idPhoto}.webp(idPhoto=${userProfile.name.length()/6})}">
+                        <h5 class="my-3" th:text="${userProfile.name}">USERNAME</h5>
+                        <div class="d-flex justify-content-center mb-2">
+                            <a class="btn btn-outline-danger mt-3 me-3 ">Log Out</a>
+
+                        </div>
+                    </div>
+                </div>
+                <!--                TODO: check for git -->
+                <div class="card mb-4 mb-lg-0" th:if="${userProfile.email}">
+                    <div class="card-body p-0">
+                        <ul class="list-group list-group-flush rounded-3">
+
+                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                <i class="fab fa-github fa-lg" style="color: #333333;"></i>
+                                <p class="mb-0" th:text="${userProfile.email}"></p>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-lg-8">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Name</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0" th:text="${userProfile.name}">USERNAME</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Email</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0" th:text="${userProfile.email}">example@example.com</p>
+                            </div>
+                        </div>
+
+                        <a class="btn btn-primary mt-3 me-3 ">Edit Profile</a>
+                        <a class="btn btn-outline-primary mt-3 me-3 ">Edit Password</a>
+
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mb-4 mb-md-0">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-around mt-3 mb-3">
+                                    <div class="col-md-4">
+                                        <h5>Files</h5>
+                                        <span class="num" th:text="${userProfile.file.size()}">10</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h5>Collection</h5>
+                                        <span class="num" th:text="${userProfile.file.size()/2}">10</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card mb-4 mb-md-0">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-around mt-3 mb-3 ">
+                                    <div class="col-md-4">
+                                        <h5>Subscriptions</h5>
+                                        <span class="num" th:text="${userProfile.subscriptions.size()}">10</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h5>Subscribers</h5>
+                                        <span class="num" th:text="${userProfile.subscribers.size()}">10</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--<div class="row mt-3" id="post">
+            <div class="col">
+                <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a th:href="@{/user#post}">User</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Post</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+        <div class="row">
+
+
+            <div th:each="p" class="card m-3" style="width: 18rem;">
+                <img class="card-img-top pt-2" data-src="holder.js/100px180/" alt="100%x180"
+                     style="height: 180px; width: 100%; display: block;"
+                     src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22286%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20286%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_187f7be5a67%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A14pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_187f7be5a67%22%3E%3Crect%20width%3D%22286%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22107.18333435058594%22%20y%3D%2296%22%3E286x180%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E"
+                     data-holder-rendered="true">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+
+
+
+        </div>-->
+
+        <!--<div th:if="${userProfile.collections.size()!=0}" class="row mt-3" id="collection">
+            <div class="col">
+                <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a th:href="@{/user#collection}">User</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Collection</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>-->
+
+        <!--<div th:if="${userProfile.collections.size()!=0}" class="row">
+            &lt;!&ndash;<div th:each="collection : ${userProfile.collections}" class="card m-3" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 th:text="${collection.title}"  class="card-title">Card title</h5>
+                    <p th:text="${collection.description}"" class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's content.</p>
+                    <a th:href="@{/collections/${collection.id}} class="btn btn-primary">More</a>
+                </div>
+            </div>&ndash;&gt;
+        </div>-->
+
+
+        <div class="row mt-3" id="files">
+            <div class="col">
+                <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a th:href="@{/user#files}">User</a></li>
+                        <li aria-current="page" class="breadcrumb-item active">Files</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="card m-3" style="width: 18rem;" th:each="file : ${userProfile.file}">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${file.title}">Card title</h5>
+                    <p class="card-text" th:text="${file.description}">Some quick example text to build on the card
+                        title and make up the bulk of the
+                        card's content.</p>
+                    <a class="btn btn-primary" th:href="@{/files/${file.id}}">Save</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div th:replace="~{_footer}"></div>
+</body>
+</html>

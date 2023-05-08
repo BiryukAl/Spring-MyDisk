@@ -11,8 +11,8 @@ import ru.kpfu.itis.mydisk.data.repositories.UserRepository
 class UserDetailsServiceImpl @Autowired constructor(
     private val userRepository: UserRepository,
 ) : UserDetailsService {
-    override fun loadUserByUsername(username: String): UserDetails {
-        val user = userRepository.findByEmail(username)
+    override fun loadUserByUsername(username: String?): UserDetails {
+        val user = userRepository.findByEmail(username ?: "")
             ?: throw UsernameNotFoundException("User with email $username not found")
         return UserDetailsImpl(user)
     }

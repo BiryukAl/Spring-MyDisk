@@ -1,0 +1,40 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom" xmlns:sec="http://www.w3.org/1999/xhtml"
+     xmlns:th="http://www.thymeleaf.org">
+    <div class="container">
+        <a class="navbar-brand me-2" th:href="@{/}">
+            <img alt="" class="d-inline-block align-top" height="30" src="" th:src="@{/icon/main_icon.png}" width="30">
+            My Disk v2
+        </a>
+        <div class="collapse navbar-collapse" id="navbarButtonsExample">
+            <div class="navbar-nav me-auto mb-2 mb-lg-0">
+                <a class="nav-item nav-link" th:href="@{/}">Collections</a>
+                <a class="nav-item nav-link" th:href="@{/}">Files</a>
+                <a class="nav-item nav-link" th:href="@{/}">Users</a>
+                <a class="nav-item nav-link disabled">Disk v3</a>
+            </div>
+
+            <div class="d-flex align-items-center" sec:authorize="!isAuthenticated()">
+                <a class="btn btn-outline-primary px-3 me-2"
+                   th:href="@{/login}">
+                    Login
+                </a>
+                <a class="btn btn-primary me-3" th:href="@{/signup}">
+                    SIGN UP FOR FREE
+                </a>
+                <a class="btn btn-secondary px-3"
+                   href="#"
+                   role="button">
+                    <i class="fab fa-github"></i>
+                </a>
+            </div>
+
+            <div class="d-flex align-items-center" sec:authorize="isAuthenticated()">
+                <a class="btn btn-outline-primary px-3 me-2"
+                   th:href="@{/profile}" th:text="${#authorization.getAuthentication().name}"></a>
+            </div>
+
+        </div>
+    </div>
+</nav>
+<!-- Navbar -->

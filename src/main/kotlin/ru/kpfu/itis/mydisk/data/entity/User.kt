@@ -6,18 +6,20 @@ import ru.kpfu.itis.mydisk.domain.security.Role
 @Entity
 @Table(name = "usr")
 data class User(
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
-    val id: Long,
+
     @Column(name = "name")
     val name: String,
     @Column(name = "email", unique = true)
     val email: String,
     @Column(name = "password")
     val password: String,
+
+    @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    val role: Role = Role.ROLE_USER,
+
     @ManyToMany()
-    val file: Set<File>,
+    val file: Set<File>? = null,
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -25,7 +27,7 @@ data class User(
         joinColumns = [JoinColumn(name = "userId")],
         inverseJoinColumns = [JoinColumn(name = "subscribersId")],
     )
-    val subscriptions: Set<User>,
+    val subscriptions: Set<User>? = null,
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -33,9 +35,10 @@ data class User(
         joinColumns = [JoinColumn(name = "subscribersId")],
         inverseJoinColumns = [JoinColumn(name = "userId")],
     )
-    val subscribers: Set<User>,
+    val subscribers: Set<User>? = null,
 
-    @Column(nullable = false)
-    @Enumerated(value = EnumType.STRING)
-    val role: Role,
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
+    val id: Long? = null,
 )
