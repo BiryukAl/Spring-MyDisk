@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:insert="~{_cdnlink}">
+<head th:insert="~{_all_head_link}">
     <title>My Disk</title>
 </head>
 <body class="bg-dark">
@@ -8,7 +8,7 @@
 
 <div class="d-flex align-items-center justify-content-center vh-100">
     <div class="text-center">
-        <h1 class="display-1 fw-bold text-light">404</h1>
+        <h1 class="display-1 fw-bold text-light">ERROR</h1>
         <p class="fs-3"><span class="text-danger ">Opps!</span> <span class="text-light"> Error. </span></p>
         <p class="lead text-light" th:text="${param.get('error')}">
             The page you’re looking for doesn’t exist.

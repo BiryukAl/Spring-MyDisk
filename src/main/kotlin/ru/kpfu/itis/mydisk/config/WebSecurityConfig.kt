@@ -25,6 +25,7 @@ class WebSecurityConfig @Autowired constructor(
                     .requestMatchers("/login", "/signup").anonymous()
                     .requestMatchers("/user", "/logout").authenticated()
                     .requestMatchers("/oauth2/**").permitAll()
+                    .requestMatchers("/favicon.ico").permitAll()
                     .anyRequest().permitAll()
                     .and()
 
