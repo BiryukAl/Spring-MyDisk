@@ -5,9 +5,10 @@ import ru.kpfu.itis.mydisk.data.entity.User
 
 data class UserResponse(
     val id: Long,
-    val name: String,
+    val name: String?,
     val email: String,
-    val file: Set<File>,
-    val subscriptions: Set<User>,
-    val subscribers: Set<User>,
+    val avatarUrl: String,
+    val file: Set<File>?,
+    val subscriptions: Set<User>?,
+    val subscribers: Set<User>?,
 )

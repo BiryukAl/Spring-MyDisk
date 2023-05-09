@@ -23,7 +23,7 @@ class UserService @Autowired constructor(
     fun save(user: UserDto): User? {
         user.password = passwordEncoder.encode(user.password)
         with(user) {
-            return userRepository.save(User(name, email, password))
+            return userRepository.save(User(name, email, password!!, user.authProvider))
         }
     }
 }

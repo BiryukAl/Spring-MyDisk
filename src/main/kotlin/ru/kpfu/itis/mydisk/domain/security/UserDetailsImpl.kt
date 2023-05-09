@@ -13,7 +13,7 @@ class UserDetailsImpl(
         return AuthorityUtils.createAuthorityList(user.role.toString())
     }
 
-    override fun getPassword(): String = user.password
+    override fun getPassword(): String? = user.password
 
     override fun getUsername(): String = user.email
     override fun isAccountNonExpired(): Boolean = true

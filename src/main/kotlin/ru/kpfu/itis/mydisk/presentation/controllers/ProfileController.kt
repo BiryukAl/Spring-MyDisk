@@ -21,6 +21,7 @@ class ProfileController @Autowired constructor(
     ): String {
         val user = userService.getUserForEmail(principal.name) ?: return "404"
         modelMap["userProfile"] = mapper.toUserResponse(user)
+        modelMap["authProvider"] = user.authProvider
         return "profile"
     }
 

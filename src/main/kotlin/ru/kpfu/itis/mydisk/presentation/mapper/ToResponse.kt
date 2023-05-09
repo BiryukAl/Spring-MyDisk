@@ -10,7 +10,7 @@ class ToResponse {
     fun toUserResponse(user: User): UserResponse {
         with(user) {
             return UserResponse(
-                id!!, name, email, file!!, subscriptions!!, subscribers!!
+                id!!, name, email, avatarUrl ?: "", file, subscriptions!!, subscribers!!,
             )
         }
     }

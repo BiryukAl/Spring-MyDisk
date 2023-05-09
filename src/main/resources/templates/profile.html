@@ -23,11 +23,18 @@
             <div class="col-lg-4">
                 <div class="card mb-4">
                     <div class="card-body text-center">
-                        <img alt="avatar"
+                        <img alt="avatar" th:if="${userProfile.avatarUrl.isEmpty()}"
                              class="rounded-circle img-fluid"
                              src=""
                              style="width: 150px;"
-                             th:src="@{https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava{idPhoto}.webp(idPhoto=${userProfile.name.length()/6})}">
+                             th:src=" @{https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava{idPhoto}.webp(idPhoto=${userProfile.name.length()/6})}">
+                        <img alt="avatar" class="rounded-circle img-fluid"
+                             src=""
+                             style="width: 150px;"
+                             th:if="${!userProfile.avatarUrl.isEmpty()}"
+                             th:src="${userProfile.avatarUrl}">
+
+
                         <h5 class="my-3" th:text="${userProfile.name}">USERNAME</h5>
                         <div class="d-flex justify-content-center mb-2">
                             <a class="btn btn-outline-danger mt-3 me-3" th:href="@{/logout}">Log Out</a>
@@ -36,13 +43,13 @@
                     </div>
                 </div>
                 <!--                TODO: check for git -->
-                <div class="card mb-4 mb-lg-0" th:if="${userProfile.email}">
+                <div class="card mb-4 mb-lg-0" th:if="${authProvider == authProvider.GITHUB }">
                     <div class="card-body p-0">
                         <ul class="list-group list-group-flush rounded-3">
 
                             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                                 <i class="fab fa-github fa-lg" style="color: #333333;"></i>
-                                <p class="mb-0" th:text="${userProfile.email}"></p>
+                                <p class="mb-0" th:text="${userProfile.name}"></p>
                             </li>
 
                         </ul>

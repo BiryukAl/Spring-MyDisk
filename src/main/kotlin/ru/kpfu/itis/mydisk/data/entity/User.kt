@@ -1,6 +1,7 @@
 package ru.kpfu.itis.mydisk.data.entity
 
 import jakarta.persistence.*
+import ru.kpfu.itis.mydisk.data.AuthenticationProvider
 import ru.kpfu.itis.mydisk.domain.security.Role
 
 @Entity
@@ -12,11 +13,19 @@ data class User(
     @Column(name = "email", unique = true)
     val email: String,
     @Column(name = "password")
-    val password: String,
+    val password: String?,
+
+    @Column
+    @Enumerated(value = EnumType.STRING)
+    val authProvider: AuthenticationProvider,
 
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     val role: Role = Role.ROLE_USER,
+
+    @Column
+    val avatarUrl: String? = null,
+
 
     @ManyToMany()
     val file: Set<File>? = null,
