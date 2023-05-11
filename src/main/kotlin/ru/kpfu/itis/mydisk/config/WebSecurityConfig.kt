@@ -5,21 +5,25 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
+import ru.kpfu.itis.mydisk.domain.security.AddUserInSessionHandler
 import ru.kpfu.itis.mydisk.domain.security.OAuth2LoginSuccessHandler
 
 @Configuration
 @EnableWebSecurity
 class WebSecurityConfig @Autowired constructor(
     private val oAuth2LoginSuccessHandler: OAuth2LoginSuccessHandler,
+    private val addUserInSessionHandler: AddUserInSessionHandler,
 ) {
 
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
-        return http.csrf().disable()
+        http
+            .csrf {
+                it
+                    .disable()
+            }
             .authorizeHttpRequests {
                 it
                     .requestMatchers("/login", "/signup").anonymous()
@@ -31,15 +35,18 @@ class WebSecurityConfig @Autowired constructor(
 
             }
             .formLogin {
-                it.loginPage("/login")
+                it
+                    .loginPage("/login")
                     .loginProcessingUrl("/login")
                     .usernameParameter("email")
                     .passwordParameter("password")
-                    .defaultSuccessUrl("/user")
+                    .successHandler(addUserInSessionHandler)
                     .failureUrl("/login?error")
             }
             .logout {
-                it.invalidateHttpSession(false)
+                it
+                    .invalidateHttpSession(false)
+                    .deleteCookies("username")
                     .clearAuthentication(true)
                     .logoutRequestMatcher(AntPathRequestMatcher("/logout"))
                     .logoutSuccessUrl("/login?logout")
@@ -47,15 +54,11 @@ class WebSecurityConfig @Autowired constructor(
 
             }
             .oauth2Login {
-                it.loginPage("/login")
-                it.successHandler(oAuth2LoginSuccessHandler)
-                it.defaultSuccessUrl("/user")
+                it
+                    .loginPage("/login")
+                    .successHandler(oAuth2LoginSuccessHandler)
             }
-            .build()
-    }
 
-    @Bean
-    fun passwordEncoder(): PasswordEncoder {
-        return BCryptPasswordEncoder()
+        return http.build()
     }
 }

@@ -8,9 +8,9 @@
         </a>
         <div class="collapse navbar-collapse" id="navbarButtonsExample">
             <div class="navbar-nav me-auto mb-2 mb-lg-0">
-                <a class="nav-item nav-link" th:href="@{/}">Collections</a>
-                <a class="nav-item nav-link" th:href="@{/}">Files</a>
-                <a class="nav-item nav-link" th:href="@{/}">Users</a>
+                <a class="nav-item nav-link" th:href="@{/}"> <i class="fa-sharp fa-solid fa-folder"></i> Collections</a>
+                <a class="nav-item nav-link" th:href="@{/}"> <i class="fa-sharp fa-solid fa-file"></i> Files</a>
+                <a class="nav-item nav-link" th:href="@{/}"> <i class="fa-sharp fa-solid fa-user-group"></i> Users</a>
                 <a class="nav-item nav-link disabled">Disk v3</a>
             </div>
 
@@ -25,8 +25,26 @@
             </div>
 
             <div class="d-flex align-items-center" sec:authorize="isAuthenticated()">
-                <a class="btn btn-outline-primary px-3 me-2"
-                   th:href="@{/user}" th:text="${#authorization.getAuthentication().name}"></a>
+
+                <div class="btn-group">
+                    <a class="btn btn-outline-primary" th:href="@{/user/add/file}">
+                        <i class="fa-sharp fa-solid fa-circle-up"></i>
+                    </a>
+                    <a class="btn btn-outline-primary" th:href="@{/user/add/post}">
+                        <i class=" fa-solid fa-pen"></i>
+                    </a>
+                    <a class="btn btn-outline-primary" th:href="@{/user/add/collection}">
+                        <i class="fa-sharp fa-solid fa-folder-open"></i> </a>
+
+                </div>
+
+                <a class="btn btn-primary px-3 me-2 ms-2 "
+                   th:href="@{/user}">
+                    <div class="d-flex">
+                        <i class="fa-solid fa-user" style="margin-top: 3px; margin-right: 5px"> </i>
+                        <p class="" style="margin-bottom: 0" th:text="${session.get('username') }"></p>
+                    </div>
+                </a>
             </div>
 
         </div>
