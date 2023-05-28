@@ -19,7 +19,6 @@ data class UserSignUpRequest(
     val email: String?,
     @field: [
     Size(min = 5, message = "Weak password")
-    NotBlank(message = "Enter password")
     ]
     val password: String?,
     @field: NotNull

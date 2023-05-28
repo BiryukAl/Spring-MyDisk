@@ -26,6 +26,9 @@ class UserService @Autowired constructor(
 
     fun save(user: UserDto): User? {
         user.password = passwordEncoder.encode(user.password)
+        if (userRepository.findByEmail(user.email) != null) {
+            return null
+        }
         with(user) {
             return userRepository.save(
                 User(

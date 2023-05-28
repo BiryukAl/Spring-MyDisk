@@ -30,7 +30,7 @@ class FieldMatchValidator : ConstraintValidator<FieldMatch, Any> {
                     ?.addConstraintViolation()
             }
             return returnValue
-        } catch (ignore: Exception) {
+        } catch (_: Exception) {
         }
         return true
     }

@@ -7,7 +7,6 @@ import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder
 import ru.kpfu.itis.mydisk.domain.dto.UserDto
 import ru.kpfu.itis.mydisk.domain.services.UserService
 import ru.kpfu.itis.mydisk.presentation.model.UserSignUpRequest
@@ -36,27 +35,32 @@ class RegisterController(
 
     @PostMapping("/signup")
     fun signup(
-        @ModelAttribute
         @Valid
+        @ModelAttribute("userForm")
         userForm: UserSignUpRequest?,
+        bindingResult: BindingResult,
         modelMap: ModelMap,
-        result: BindingResult,
     ): String {
-        if (result.hasErrors()) {
+        if (bindingResult.hasErrors()) {
+//            modelMap["userForm"] = userForm
             return "sign_up"
         }
         if (userForm != null) {
-            userService.save(
-                UserDto(
-                    name = userForm.name!!,
-                    email = userForm.email!!,
-                    password = userForm.password!!,
-                    avatarUrl = "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava${(userForm.name.length % 6) + 1}.webp"
-                )
+            val dto = UserDto(
+                name = userForm.name!!,
+                email = userForm.email!!,
+                password = userForm.password!!,
+                avatarUrl = "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava${(userForm.name.length % 6) + 1}.webp"
             )
-
-            return "redirect:" + MvcUriComponentsBuilder.fromMappingName("RC#getLoginPage").build()
+            val newUser = userService.save(dto)
+            if (newUser != null) {
+                return "redirect:/login"
+            } else {
+                bindingResult.rejectValue("email", "error.user", "An account already exists for this email.")
+            }
         }
+
+//        modelMap["userForm"] = userForm
         return "sign_up"
     }
 }
