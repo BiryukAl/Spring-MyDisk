@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service
 import ru.kpfu.itis.mydisk.data.entity.CollectionFiles
 import ru.kpfu.itis.mydisk.data.entity.User
 import ru.kpfu.itis.mydisk.data.repositories.CollectionRepository
+import kotlin.jvm.optionals.getOrNull
 
 @Service
 class CollectionService(
@@ -20,8 +21,9 @@ class CollectionService(
         return collectionRepository.findAll(pageable)
     }
 
+    @OptIn(ExperimentalStdlibApi::class)
     fun getOneCollection(id: Long): CollectionFiles? {
-        return collectionRepository.findById(id).get()
+        return collectionRepository.findById(id).getOrNull()
     }
 
     fun getCollectionOnUser(idUser: User): List<CollectionFiles> {

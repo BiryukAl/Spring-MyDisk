@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service
 import ru.kpfu.itis.mydisk.data.entity.User
 import ru.kpfu.itis.mydisk.data.repositories.UserRepository
 import ru.kpfu.itis.mydisk.domain.dto.UserDto
+import kotlin.jvm.optionals.getOrNull
 
 @Service
 class UserService @Autowired constructor(
@@ -20,8 +21,9 @@ class UserService @Autowired constructor(
         return userRepository.findByEmail(email)
     }
 
+    @OptIn(ExperimentalStdlibApi::class)
     fun getUserForId(id: Long): User? {
-        return userRepository.findById(id).get()
+        return userRepository.findById(id).getOrNull()
     }
 
     fun save(user: UserDto): User? {

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service
 import ru.kpfu.itis.mydisk.data.entity.File
 import ru.kpfu.itis.mydisk.data.entity.User
 import ru.kpfu.itis.mydisk.data.repositories.FileRepository
+import kotlin.jvm.optionals.getOrNull
 
 @Service
 class FilesService @Autowired constructor(
@@ -16,8 +17,9 @@ class FilesService @Autowired constructor(
         return fileRepository.findAll()
     }
 
+    @OptIn(ExperimentalStdlibApi::class)
     fun getById(id: Long): File? {
-        return fileRepository.findById(id).get()
+        return fileRepository.findById(id).getOrNull()
     }
 
     fun getFilesOnUser(idUser: User): List<File> {

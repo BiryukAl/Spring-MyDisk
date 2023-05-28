@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service
 import ru.kpfu.itis.mydisk.data.entity.Post
 import ru.kpfu.itis.mydisk.data.entity.User
 import ru.kpfu.itis.mydisk.data.repositories.PostRepository
+import kotlin.jvm.optionals.getOrNull
 
 @Service
 class PostService(
@@ -20,8 +21,9 @@ class PostService(
         return postRepository.save(post)
     }
 
+    @OptIn(ExperimentalStdlibApi::class)
     fun getOnePost(id: Long): Post? {
-        return postRepository.findById(id).get()
+        return postRepository.findById(id).getOrNull()
     }
 
     fun getPostOnUser(idUser: User): List<Post> {
