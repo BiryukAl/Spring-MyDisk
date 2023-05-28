@@ -21,6 +21,7 @@
 
 
       <div class="card m-3" style="width: 18rem;" th:each="user : ${users}">
+        <img alt="Avatar" class="card-img-top rounded-circle mt-3" src="" th:src="*{user.avatarUrl}"/>
         <div class="card-body">
           <h5 class="card-title" th:text="*{user.name}">Card title</h5>
           <p class="card-text" th:text="*{user.email}">Some quick example text to build on the card

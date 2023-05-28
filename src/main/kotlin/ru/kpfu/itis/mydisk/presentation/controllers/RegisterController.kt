@@ -45,19 +45,17 @@ class RegisterController(
         if (result.hasErrors()) {
             return "sign_up"
         }
-
         if (userForm != null) {
             userService.save(
                 UserDto(
-                    userForm.name!!,
-                    userForm.email!!,
-                    userForm.password!!
+                    name = userForm.name!!,
+                    email = userForm.email!!,
+                    password = userForm.password!!,
+                    avatarUrl = "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava${(userForm.name.length % 6) + 1}.webp"
                 )
-            ) ?: return "redirect:" + MvcUriComponentsBuilder
-                .fromMappingName("UC#getLoginPage")
-                .build() + "?error=such"
+            )
 
-            return "redirect:" + MvcUriComponentsBuilder.fromMappingName("UC#getLoginPage").build()
+            return "redirect:" + MvcUriComponentsBuilder.fromMappingName("RC#getLoginPage").build()
         }
         return "sign_up"
     }

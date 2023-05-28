@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder
 import ru.kpfu.itis.mydisk.data.entity.Post
+import ru.kpfu.itis.mydisk.domain.services.CommentService
 import ru.kpfu.itis.mydisk.domain.services.PostService
 import ru.kpfu.itis.mydisk.domain.services.UserService
 import java.security.Principal
@@ -16,6 +17,7 @@ import java.security.Principal
 class PostController(
     private val postService: PostService,
     private val userService: UserService,
+    private val commentService: CommentService,
 ) {
     @GetMapping("/posts")
     fun getAllPost(modelMap: ModelMap): String {
@@ -64,8 +66,9 @@ class PostController(
     ): String {
         val id = idPost.toLong()
         val post = postService.getOnePost(id) ?: return "404"
-        println(post)
         modelMap["post"] = post
+        val comments = commentService.getCommentsONPost(post)
+        modelMap["comments"] = comments
         return "one_post"
     }
 }

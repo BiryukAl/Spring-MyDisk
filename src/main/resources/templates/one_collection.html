@@ -29,8 +29,11 @@
                 </div>
             </div>
         </div>
-        <a class="btn btn-danger mt-3 me-3" th:href="@{/collection/{id}/delete(id = ${collection.id})}"
-           th:if="collection_is_my">Delete</a>
+        <div th:if="${collection_is_my}">
+            <a class="btn btn-danger mt-3 me-3" th:href="@{/collection/{id}/delete(id = ${collection.id})}"
+            >Delete</a>
+        </div>
+
     </div>
 
 

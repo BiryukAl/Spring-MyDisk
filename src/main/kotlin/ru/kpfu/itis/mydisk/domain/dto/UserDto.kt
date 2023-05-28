@@ -7,4 +7,5 @@ data class UserDto(
     val email: String,
     var password: String?,
     val authProvider: AuthenticationProvider = AuthenticationProvider.LOCAL,
+    val avatarUrl: String = "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1.webp",
 )

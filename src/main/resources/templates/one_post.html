@@ -64,17 +64,16 @@
 
                             <div class="text-center ">
                                 <p class="text-light"><strong>Comments: </strong></p>
-                                <p class="text-light" th:text="${post.comments.size()}"><strong>3</strong></p>
+                                <p class="text-light" th:text="${comments.size()}"><strong>3</strong></p>
                             </div>
                             <!-- Comment -->
-                            <div class="row mb-4" th:each="coment: ${post.comments}">
+                            <div class="row mb-4" th:each="coment: ${comments}">
                                 <div class="col-2">
+                                    <img alt=""
+                                         class="img-fluid shadow-1-strong rounded-5"
+                                         src="https://mdbootstrap.com/img/Photos/Avatars/img%20(24).jpg"
+                                         th:src="*{coment.holderId.avatarUrl}"/>
                                 </div>
-                                <img alt=""
-                                     class="img-fluid shadow-1-strong rounded-5"
-                                     src="https://mdbootstrap.com/img/Photos/Avatars/img%20(24).jpg"
-                                     th:src="*{coment.holderId.avatarUrl}"/>
-
                                 <div class="col-10">
                                     <p class="mb-2 text-light" th:text="*{coment.holderId.name}"><strong>Marta
                                         Dolores</strong></p>
@@ -96,7 +95,7 @@
                             <form action="" method="post" th:action="@{/user/add/comment/post/{id} (id=${post.id}) }">
                                 <!-- Message input -->
                                 <div class="form-outline mb-4">
-                                    <textarea class="form-control form-control-lg" name="description"
+                                    <textarea class="form-control form-control-lg" name="body"
                                               placeholder=""> </textarea>
                                     <label class="form-label">Comment</label>
                                 </div>
