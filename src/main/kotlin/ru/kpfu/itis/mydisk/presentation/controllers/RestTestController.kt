@@ -11,6 +11,10 @@ class RestTestController(
     private val userService: UserService,
     private val mapper: ToResponse,
 ) {
+
+    // TODO: Организация REST API хотя бы для одной сущности.
+    //  Подключение генерации openAPI.
+    //  А также написание тестов через http-файлы Idea или через Postman.
     @GetMapping("/api/v1/users")
     fun getAllUser(): List<UserResponse> {
         return userService.getAllUser().map(mapper::toUserResponse)
