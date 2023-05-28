@@ -17,6 +17,7 @@ class WebSecurityConfig @Autowired constructor(
     private val addUserInSessionHandler: AddUserInSessionHandler,
 ) {
 
+
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http
@@ -26,10 +27,8 @@ class WebSecurityConfig @Autowired constructor(
             }
             .authorizeHttpRequests {
                 it
-                    .requestMatchers("/login", "/signup").anonymous()
-                    .requestMatchers("/user", "/logout").authenticated()
-                    .requestMatchers("/oauth2/**").permitAll()
-                    .requestMatchers("/favicon.ico").permitAll()
+                    .requestMatchers("/login", "/signup", "/oauth2/**").anonymous()
+                    .requestMatchers("/user", "/logout", "/user/add/**").authenticated()
                     .anyRequest().permitAll()
                     .and()
 

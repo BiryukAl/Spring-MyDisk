@@ -26,9 +26,15 @@ data class User(
     @Column
     val avatarUrl: String? = null,
 
+    @OneToMany(mappedBy = "holderId", orphanRemoval = true, fetch = FetchType.EAGER)
+    var file: Set<File>? = null,
+    // TODO: Fix get all files user 
 
-    @ManyToMany()
-    val file: Set<File>? = null,
+    @OneToMany(mappedBy = "holderId")
+    var post: Set<Post>? = null,
+
+    @OneToMany(mappedBy = "holderId")
+    var collectionFiles: Set<CollectionFiles>? = null,
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -36,7 +42,7 @@ data class User(
         joinColumns = [JoinColumn(name = "userId")],
         inverseJoinColumns = [JoinColumn(name = "subscribersId")],
     )
-    val subscriptions: Set<User>? = null,
+    var subscriptions: Set<User>? = null,
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -44,7 +50,7 @@ data class User(
         joinColumns = [JoinColumn(name = "subscribersId")],
         inverseJoinColumns = [JoinColumn(name = "userId")],
     )
-    val subscribers: Set<User>? = null,
+    var subscribers: Set<User>? = null,
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

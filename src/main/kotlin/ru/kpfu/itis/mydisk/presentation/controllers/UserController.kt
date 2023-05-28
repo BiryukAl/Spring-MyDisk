@@ -1,60 +1,49 @@
 package ru.kpfu.itis.mydisk.presentation.controllers
 
-import jakarta.validation.Valid
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.ModelMap
-import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.ModelAttribute
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder
-import ru.kpfu.itis.mydisk.domain.dto.UserDto
+import org.springframework.web.bind.annotation.PathVariable
+import ru.kpfu.itis.mydisk.domain.services.CollectionService
+import ru.kpfu.itis.mydisk.domain.services.FilesService
+import ru.kpfu.itis.mydisk.domain.services.PostService
 import ru.kpfu.itis.mydisk.domain.services.UserService
-import ru.kpfu.itis.mydisk.presentation.model.UserSignUpRequest
+import ru.kpfu.itis.mydisk.presentation.mapper.ToResponse
 
 @Controller
-class UserController @Autowired constructor(
+class UserController(
     private val userService: UserService,
+    private val mapper: ToResponse,
+    private val filesService: FilesService,
+    private val collectionService: CollectionService,
+    private val postService: PostService,
 ) {
 
-    @GetMapping("/login")
-    fun getLoginPage(
+    @GetMapping("/users")
+    fun getAllUserPage(
         modelMap: ModelMap,
     ): String {
-        return "log_in"
+        modelMap["users"] = userService.getAllUser()
+        return "all_user"
     }
 
-    @GetMapping("/signup")
-    fun getSignupPage(
+    @GetMapping("/user/{id:\\d+}")
+    fun getOneUser(
         modelMap: ModelMap,
-        userForm: UserSignUpRequest,
+        @PathVariable("id")
+        idUser: String,
     ): String {
-        modelMap["userForm"] = userForm
-        return "sign_up"
-    }
+        val id = idUser.toLong()
 
+        val user = userService.getUserForId(id) ?: return "404"
 
-    @PostMapping("/signup")
-    fun signup(
-        @ModelAttribute
-        @Valid
-        userForm: UserSignUpRequest?,
-        modelMap: ModelMap,
-        result: BindingResult,
-    ): String {
-        if (result.hasErrors()) {
-            return "sign_up"
-        }
+        modelMap["user_file"] = filesService.getFilesOnUser(user)
+        modelMap["user_collection"] = collectionService.getCollectionOnUser(user)
+        modelMap["user_post"] = postService.getPostOnUser(user)
+        modelMap["userProfile"] = mapper.toUserResponse(user)
+        modelMap["authProvider"] = user.authProvider
 
-        userForm?.let {
-            val newUser = userService.save(UserDto(userForm.name!!, userForm.email!!, userForm.password!!))
-            newUser?.let { id ->
-                return "redirect:" +
-                        MvcUriComponentsBuilder.fromMappingName("TC#getTestTemplate").build()
-            }
-            return "redirect:" + MvcUriComponentsBuilder.fromMappingName("TC#getTestTemplate").build()
-        }
-        return "sign_up"
+        return "user_profile"
+
     }
 }

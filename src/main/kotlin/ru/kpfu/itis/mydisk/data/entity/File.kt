@@ -6,22 +6,26 @@ import jakarta.persistence.*
 @Entity
 @Table(name = "file")
 data class File(
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
-    val id: Long,
+
     @Column(name = "title", nullable = false)
     val title: String,
     @Column(name = "description", nullable = true)
-    val description: String,
-    @OneToOne(cascade = [CascadeType.ALL])
-    @JoinColumn(name = "holderId", referencedColumnName = "id")
-    val holder: User,
+    val description: String?,
+
+    @ManyToOne(cascade = [CascadeType.ALL])
+    @JoinColumn(name = "holderId", referencedColumnName = "id", nullable = false)
+    val holderId: User,
+
     @Column(name = "nameFile")
     val nameFile: String,
     @Column(name = "publicAccess")
     val publicAccess: Boolean,
 
-    @ManyToMany(mappedBy = "file", fetch = FetchType.LAZY)
-    val access: Set<User>,
+    @ManyToMany
+    var collectionFiles: Set<CollectionFiles>? = null,
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
+    var id: Long? = null,
 )

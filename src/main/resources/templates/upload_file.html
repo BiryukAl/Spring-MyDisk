@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Disk</title>
+    <link th:replace="~{_all_head_link}">
+</head>
+<body class="bg-dark">
+<div th:replace="~{_navbar}"></div>
+
+<section class="vh-100 bg-dark">
+    <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+        <div class="container h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                    <div class="card" style="border-radius: 15px;">
+                        <div class="card-body p-5">
+                            <h2 class="text-uppercase text-center mb-5">Upload File</h2>
+
+                            <form action="" enctype="multipart/form-data" method="post" th:action="@{/user/add/file}">
+                                <div class="form-outline mb-4">
+
+                                    <input class="form-control form-control-lg" name="title" placeholder="Title"
+                                           type="text"/>
+
+                                    <label class="form-label">Title File</label>
+                                </div>
+
+                                <div class="form-outline mb-4">
+
+                                    <textarea class="form-control form-control-lg" name="description"
+                                              placeholder=""></textarea>
+                                    <label class="form-label">Description</label>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <label class="fs-4">Access: </label>
+                                    <div aria-label="Basic radio toggle button group" class="btn-group" role="group">
+                                        <input autocomplete="public" checked class="btn-check" id="btnradio1"
+                                               name="access" type="radio" value="public">
+                                        <label class="btn btn-outline-primary" for="btnradio1">Public</label>
+                                        <input autocomplete="private" class="btn-check" id="btnradio2" name="access"
+                                               type="radio" value="private">
+                                        <label class="btn btn-outline-danger" for="btnradio2">Private</label>
+                                    </div>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <input class="form-control form-control-lg" name="file" type="file"/>
+                                </div>
+                                <div class="d-flex justify-content-center mb-4">
+                                    <button class="btn btn-success btn-block btn-lg gradient-custom-4 text-body"
+                                            type="submit">
+                                        Upload
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div th:replace="~{_footer}"></div>
+</body>
+</html>

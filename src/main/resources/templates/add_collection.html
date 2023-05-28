@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Disk</title>
+    <link th:replace="~{_all_head_link}">
+
+    <!-- Styles -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css"
+          rel="stylesheet"/>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+</head>
+<body class="bg-dark">
+<div th:replace="~{_navbar}"></div>
+<section class="vh-100 bg-dark">
+    <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+        <div class="container h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                    <div class="card" style="border-radius: 15px;">
+                        <div class="card-body p-5">
+                            <h2 class="text-uppercase text-center mb-5">To Compose</h2>
+
+                            <form action="" method="post" th:action="@{/user/add/collection}">
+                                <div class="form-outline mb-4">
+                                    <input class="form-control form-control-lg" name="title" placeholder="Title"
+                                           type="text"/>
+                                    <label class="form-label">Title</label>
+                                </div>
+                                <div class="form-outline mb-4">
+                                    <select class="form-select"
+                                            data-placeholder="Chose Files"
+                                            id="multiple-select-field"
+                                            multiple
+                                            name="chose_files"
+                                    >
+                                        <div
+                                                th:each="file: ${user_files}">
+                                            <option th:text="*{file.title}" th:value="*{file.id}">File 1</option>
+                                        </div>
+                                    </select>
+                                    <script>
+                                        $('#multiple-select-field').select2({
+                                            theme: "bootstrap-5",
+                                            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                                            placeholder: $(this).data('placeholder'),
+                                            closeOnSelect: false,
+                                        });
+                                    </script>
+
+                                </div>
+                                <div class="d-flex justify-content-center mb-4">
+                                    <button class="btn btn-success btn-block btn-lg gradient-custom-4 text-body"
+                                            type="submit">
+                                        Compose
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div th:replace="~{_footer}"></div>
+</body>
+</html>

@@ -20,6 +20,10 @@ class UserService @Autowired constructor(
         return userRepository.findByEmail(email)
     }
 
+    fun getUserForId(id: Long): User? {
+        return userRepository.findById(id).get()
+    }
+
     fun save(user: UserDto): User? {
         user.password = passwordEncoder.encode(user.password)
         with(user) {
