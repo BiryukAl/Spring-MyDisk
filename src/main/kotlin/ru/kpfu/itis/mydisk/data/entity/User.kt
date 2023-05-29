@@ -1,6 +1,8 @@
 package ru.kpfu.itis.mydisk.data.entity
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
+
 import ru.kpfu.itis.mydisk.data.AuthenticationProvider
 import ru.kpfu.itis.mydisk.domain.security.Role
 
@@ -13,26 +15,32 @@ data class User(
     @Column(name = "email", unique = true)
     val email: String,
     @Column(name = "password")
+    @JsonIgnore
     val password: String?,
 
     @Column
     @Enumerated(value = EnumType.STRING)
+    @JsonIgnore
     val authProvider: AuthenticationProvider,
 
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
+    @JsonIgnore
     val role: Role = Role.ROLE_USER,
 
     @Column
     val avatarUrl: String? = null,
 
+    @JsonIgnore
     @OneToMany(mappedBy = "holderId", orphanRemoval = true, fetch = FetchType.EAGER)
     var file: Set<File>? = null,
-    // TODO: Fix get all files user 
+    // TODO: Fix get all files user
 
+    @JsonIgnore
     @OneToMany(mappedBy = "holderId")
     var post: Set<Post>? = null,
 
+    @JsonIgnore
     @OneToMany(mappedBy = "holderId")
     var collectionFiles: Set<CollectionFiles>? = null,
 
@@ -42,6 +50,7 @@ data class User(
         joinColumns = [JoinColumn(name = "userId")],
         inverseJoinColumns = [JoinColumn(name = "subscribersId")],
     )
+    @JsonIgnore
     var subscriptions: Set<User>? = null,
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -50,6 +59,7 @@ data class User(
         joinColumns = [JoinColumn(name = "subscribersId")],
         inverseJoinColumns = [JoinColumn(name = "userId")],
     )
+    @JsonIgnore
     var subscribers: Set<User>? = null,
 
     @Id

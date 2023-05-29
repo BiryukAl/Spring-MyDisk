@@ -1,7 +1,9 @@
 package ru.kpfu.itis.mydisk.presentation.mapper
 
 import org.springframework.stereotype.Component
+import ru.kpfu.itis.mydisk.data.entity.Post
 import ru.kpfu.itis.mydisk.data.entity.User
+import ru.kpfu.itis.mydisk.presentation.model.PostResponse
 import ru.kpfu.itis.mydisk.presentation.model.UserResponse
 
 @Component
@@ -14,11 +16,20 @@ class ToResponse {
                 name = name,
                 email = email,
                 avatarUrl = avatarUrl ?: "",
-                file = file,
-                collectionFiles = collectionFiles,
-                post = post,
                 subscriptions = subscriptions!!,
                 subscribers = subscribers!!,
+            )
+        }
+    }
+
+    fun toPostResponse(post: Post): PostResponse {
+        with(post) {
+            return PostResponse(
+                id = id,
+                description = description,
+                title = title,
+                img = img,
+                holderId = holderId?.let { toUserResponse(holderId) },
             )
         }
     }

@@ -12,8 +12,16 @@
                     Collections</a>
                 <a class="nav-item nav-link" th:href="@{/files}"> <i class="fa-sharp fa-solid fa-file"></i> Files</a>
                 <a class="nav-item nav-link" th:href="@{/users}"> <i class="fa-sharp fa-solid fa-user-group"></i> Users</a>
+                <a class="nav-item nav-link" th:href="@{/v3/api-docs}"> API</a>
                 <a class="nav-item nav-link disabled">Disk v3</a>
             </div>
+
+            <form class="d-flex me-3" method="post" role="search" th:action="@{/search/post}">
+                <input aria-label="Search" class="form-control me-2" name="query" placeholder="Search on file"
+                       type="search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+
 
             <div class="d-flex align-items-center" sec:authorize="!isAuthenticated()">
                 <a class="btn btn-outline-primary px-3 me-2"

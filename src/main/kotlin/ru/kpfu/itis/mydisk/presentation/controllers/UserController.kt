@@ -53,6 +53,8 @@ class UserController(
         val user = userService.getUserForEmail(principal.name) ?: return "404"
 
         initUser(modelMap, user)
+
+        modelMap["comment_in_post"] = postService.commentedPostOnUser(user)
         return "my_profile"
     }
 

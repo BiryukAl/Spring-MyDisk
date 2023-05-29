@@ -53,7 +53,7 @@ class PostController(
             )
         )
         return "redirect:" + MvcUriComponentsBuilder
-            .fromMappingName("PC#getProfilePage")
+            .fromMappingName("UC#getProfilePage")
             .build()
 
     }
