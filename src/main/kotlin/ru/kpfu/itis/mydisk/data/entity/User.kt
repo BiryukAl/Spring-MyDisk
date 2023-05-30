@@ -30,37 +30,38 @@ data class User(
 
     @Column
     val avatarUrl: String? = null,
+    /* TODO: StackOverFlowException
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "holderId", orphanRemoval = true, fetch = FetchType.EAGER)
-    var file: Set<File>? = null,
-    // TODO: Fix get all files user
+        @JsonIgnore
+        @OneToMany(mappedBy = "holderId", orphanRemoval = true, fetch = FetchType.EAGER)
+        var file: Set<File>? = null,
+        // TODO: Fix get all files user
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "holderId")
-    var post: Set<Post>? = null,
+        @JsonIgnore
+        @OneToMany(mappedBy = "holderId")
+        var post: Set<Post>? = null,
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "holderId")
-    var collectionFiles: Set<CollectionFiles>? = null,
+        @JsonIgnore
+        @OneToMany(mappedBy = "holderId")
+        var collectionFiles: Set<CollectionFiles>? = null,*/
 
+//    подпищики
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "subscriptions",
         joinColumns = [JoinColumn(name = "userId")],
         inverseJoinColumns = [JoinColumn(name = "subscribersId")],
     )
-    @JsonIgnore
-    var subscriptions: Set<User>? = null,
+    var subscriptions: MutableSet<User>? = null,
 
+//    подписки
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "subscriptions",
         joinColumns = [JoinColumn(name = "subscribersId")],
         inverseJoinColumns = [JoinColumn(name = "userId")],
     )
-    @JsonIgnore
-    var subscribers: Set<User>? = null,
+    var subscribers: MutableSet<User>? = null,
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

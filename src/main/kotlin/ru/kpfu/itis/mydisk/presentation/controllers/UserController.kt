@@ -34,13 +34,26 @@ class UserController(
         modelMap: ModelMap,
         @PathVariable("id")
         idUser: String,
+        principal: Principal?,
     ): String {
         val id = idUser.toLong()
 
         val user = userService.getUserForId(id) ?: return "404"
-
         initUser(modelMap, user)
+        println(user)
+        principal?.let {
+            val authenticationUser = userService.getUserForEmail(principal.name)!!
+            val authenticationUserSubscribers = authenticationUser.subscribers!!
 
+            modelMap["authentication_user_subscribers"] =
+                if (authenticationUserSubscribers.isNotEmpty()) {
+                    authenticationUserSubscribers
+                        .map { it.id!! }.toList()
+                } else {
+                    listOf(0L)
+                }
+            modelMap["authenticationUser"] = authenticationUser
+        }
         return "user_profile"
 
     }
@@ -51,7 +64,7 @@ class UserController(
         principal: Principal,
     ): String {
         val user = userService.getUserForEmail(principal.name) ?: return "404"
-
+        println(user)
         initUser(modelMap, user)
 
         modelMap["comment_in_post"] = postService.commentedPostOnUser(user)
@@ -64,5 +77,7 @@ class UserController(
         modelMap["user_post"] = postService.getPostOnUser(user)
         modelMap["userProfile"] = mapper.toUserResponse(user)
         modelMap["authProvider"] = user.authProvider
+        modelMap["subscriptionsId"] = user.subscriptions?.map { it.id }
+
     }
 }

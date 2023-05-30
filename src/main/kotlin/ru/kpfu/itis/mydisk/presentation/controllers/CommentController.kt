@@ -27,12 +27,10 @@ class CommentController(
         val idPost = id.toLong()
         val post = postService.getOnePost(idPost)
         if (body.isNullOrBlank() || principal == null || post == null) {
-            return "redirect:" + MvcUriComponentsBuilder.fromMappingName("PC#getOnePost").arg(1, idPost).build()
+            return "redirect:" + MvcUriComponentsBuilder.fromMappingName("PC#getAllPost").build()
         }
-
         val user = userService.getUserForEmail(principal.name)!!
-
         commentService.save(Comment(body, user, post))
-        return "redirect:" + MvcUriComponentsBuilder.fromMappingName("PC#getOnePost").arg(1, id).build()
+        return "redirect:" + MvcUriComponentsBuilder.fromMappingName("PC#getAllPost").build()
     }
 }

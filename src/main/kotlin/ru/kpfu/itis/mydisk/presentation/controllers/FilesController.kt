@@ -76,7 +76,7 @@ class FilesController(
         )
         fileSystemStorageService.store(file, newNameFile)
         return "redirect:" + MvcUriComponentsBuilder
-            .fromMappingName("PC#getProfilePage").build()
+            .fromMappingName("UC#getProfilePage").build()
 
     }
 

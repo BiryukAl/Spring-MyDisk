@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder
 import ru.kpfu.itis.mydisk.data.entity.CollectionFiles
 import ru.kpfu.itis.mydisk.domain.services.CollectionService
 import ru.kpfu.itis.mydisk.domain.services.FilesService
@@ -38,7 +39,7 @@ class CollectionController(
 
         val collection = collectionService.getOneCollection(idCollection) ?: return "404"
 
-        // TODO: add collection delete
+        // TODO: add collection delete button visible
         /*val user = userService.getUserForEmail(principal.name)*/
         modelMap["collection_is_my"] = /*user?.id!! == collection.holderId.id*/ false
 
@@ -85,6 +86,7 @@ class CollectionController(
 
         val description: String = files.joinToString(",") { it.title }
         collectionService.addCollection(CollectionFiles(title, description, files, user!!))
-        return "add_collection"
+        return "redirect:" + MvcUriComponentsBuilder
+            .fromMappingName("UC#getProfilePage").build()
     }
 }

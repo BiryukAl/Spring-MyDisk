@@ -17,4 +17,6 @@ interface UserRepository : JpaRepository<User, Long> {
         avatarUrl: String?,
         userID: Long,
     )
+
+
 }

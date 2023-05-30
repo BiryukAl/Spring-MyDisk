@@ -28,14 +28,21 @@ class OAuth2LoginSuccessHandler @Autowired constructor(
         val idGit = oAuth2User.name
         val emailAny = oAuth2User.attributes["email"] ?: oAuth2User.attributes["login"]
         val name = oAuth2User.attributes["login"] as String
-        val email = emailAny as String
         val avatarUrl = oAuth2User.attributes["avatar_url"] as String?
 
         val userLocal = userRepository.findByEmail(idGit)
 
         if (userLocal == null) {
             println("OAuth2: New User")
-            userRepository.save(User(name, idGit, null, AuthenticationProvider.GITHUB, avatarUrl = avatarUrl))
+            userRepository.save(
+                User(
+                    name = name,
+                    email = idGit,
+                    password = null,
+                    authProvider = AuthenticationProvider.GITHUB,
+                    avatarUrl = avatarUrl
+                )
+            )
 
         } else {
             println("OAuth2: Existing User")

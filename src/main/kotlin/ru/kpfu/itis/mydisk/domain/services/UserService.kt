@@ -26,6 +26,38 @@ class UserService @Autowired constructor(
         return userRepository.findById(id).getOrNull()
     }
 
+
+    @OptIn(ExperimentalStdlibApi::class)
+    fun subscribe(myId: Long, idSubscribe: Long): User? {
+        val user = userRepository.findById(myId).getOrNull()
+        val sub = userRepository.findById(idSubscribe).getOrNull()
+        if (user == null || sub == null) {
+            return null
+        }
+        if (sub.subscriptions?.map { it.id }?.any { it == user.id } != true) {
+            sub.subscriptions?.add(user)
+            userRepository.flush()
+        }
+        return user
+    }
+
+    @OptIn(ExperimentalStdlibApi::class)
+    fun unsubscribe(myId: Long, idSubscribe: Long): User? {
+        val user = userRepository.findById(myId).getOrNull()
+        val sub = userRepository.findById(idSubscribe).getOrNull()
+        if (user == null || sub == null) {
+            return null
+        }
+        if (sub.subscriptions?.map { it.id }?.any { it == user.id } == true) {
+            sub.subscriptions?.remove(user)
+            println(sub.subscriptions)
+            userRepository.flush()
+            // TODO: Работает только в дебаге .flush()
+        }
+        return user
+    }
+
+
     fun save(user: UserDto): User? {
         user.password = passwordEncoder.encode(user.password)
         if (userRepository.findByEmail(user.email) != null) {
