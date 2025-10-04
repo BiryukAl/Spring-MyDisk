@@ -38,7 +38,7 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0")
 	// https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-kotlin
-	runtimeOnly("org.springdoc:springdoc-openapi-kotlin:1.7.0")
+	//	runtimeOnly("org.springdoc:springdoc-openapi-kotlin:1.7.0")
 
 
 }
